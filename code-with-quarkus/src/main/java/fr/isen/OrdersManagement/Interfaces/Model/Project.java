@@ -8,31 +8,31 @@ public class Project {
 //begin of modifiable zone(Javadoc).......C/222963ae-29d1-4e60-b67a-d20fcaf140c1
 
 //end of modifiable zone(Javadoc).........E/222963ae-29d1-4e60-b67a-d20fcaf140c1
-    private int Id;
+    private int idproject;
 
-    public int getId() {
+    public int getIdproject() {
         // Automatically generated method. Please do not modify this code.
-        return this.Id;
+        return this.idproject;
     }
 
-    public void setId(final int value) {
+    public void setIdproject(final int value) {
         // Automatically generated method. Please do not modify this code.
-        this.Id = value;
+        this.idproject = value;
     }
 
 //begin of modifiable zone(Javadoc).......C/689dcf00-10b5-4b84-ada4-c927cf188070
 
 //end of modifiable zone(Javadoc).........E/689dcf00-10b5-4b84-ada4-c927cf188070
-    private String Name;
+    private String name;
 
     public String getName() {
         // Automatically generated method. Please do not modify this code.
-        return this.Name;
+        return this.name;
     }
 
     public void setName(final String value) {
         // Automatically generated method. Please do not modify this code.
-        this.Name = value;
+        this.name = value;
     }
 
 }

@@ -3,14 +3,9 @@ package fr.isen.OrdersManagement;
 import fr.isen.OrdersManagement.Interfaces.Model.Organisation;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
 
-import javax.swing.*;
-import java.util.List;
-
-@Path("/test")
-public class TestResource {
+@Path("/organisation")
+public class OrganisationResource {
 
     Organisation a = new Organisation();
     Organisation b = new Organisation();
