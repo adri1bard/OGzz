@@ -1,5 +1,6 @@
 package fr.isen.ordersmanagement.interfaces.services;
 
+import java.util.List;
 import fr.isen.ordersmanagement.interfaces.model.Availability;
 import fr.isen.ordersmanagement.interfaces.model.Contact;
 import fr.isen.ordersmanagement.interfaces.model.License;
@@ -75,5 +76,30 @@ public interface IOrderService {
 
 //end of modifiable zone(Javadoc).........E/9c6e1bb6-0cc5-4d4d-b7a5-a261a8b8f77d
     int createLicense(final License license);
+
+//begin of modifiable zone(Javadoc).......C/f92a8718-c93f-43cb-9c5a-4b8bff48bc6f
+
+//end of modifiable zone(Javadoc).........E/f92a8718-c93f-43cb-9c5a-4b8bff48bc6f
+    Contact getContact(final int contactId);
+
+//begin of modifiable zone(Javadoc).......C/fd60ba19-1077-4739-a56b-130ee57253cd
+
+//end of modifiable zone(Javadoc).........E/fd60ba19-1077-4739-a56b-130ee57253cd
+    List<Location> getLocations();
+
+//begin of modifiable zone(Javadoc).......C/6ec4c07a-b7bb-4899-adc7-4866c6c69068
+
+//end of modifiable zone(Javadoc).........E/6ec4c07a-b7bb-4899-adc7-4866c6c69068
+    List<License> getLicenses();
+
+//begin of modifiable zone(Javadoc).......C/41403980-bcba-4d72-854f-0d4230db4565
+
+//end of modifiable zone(Javadoc).........E/41403980-bcba-4d72-854f-0d4230db4565
+    List<Availability> getAvailabilities();
+
+//begin of modifiable zone(Javadoc).......C/02731674-5c72-4ad8-a30d-85cbb1863526
+
+//end of modifiable zone(Javadoc).........E/02731674-5c72-4ad8-a30d-85cbb1863526
+    List<Service> getLevels();
 
 }

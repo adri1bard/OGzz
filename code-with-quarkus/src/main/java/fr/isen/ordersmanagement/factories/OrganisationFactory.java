@@ -20,10 +20,12 @@ public class OrganisationFactory {
     }
 
     public List<Organisation> getOrganisationMock(){
+        Organisation o = new Organisation();
+        o.setIdOrganisation(1);
+        o.setName("Company");
         if(organisations == null) {
             organisations = new ArrayList<Organisation>();
-            organisations.add(new Organisation());
-            organisations.add(new Organisation());
+            organisations.add(o);
         }
         return organisations;
     }

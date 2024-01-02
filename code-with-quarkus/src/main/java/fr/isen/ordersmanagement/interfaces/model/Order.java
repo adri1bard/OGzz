@@ -1,11 +1,9 @@
 package fr.isen.ordersmanagement.interfaces.model;
 
 
-//begin of modifiable zone(Javadoc).......C/e8e93e79-82e1-4cc2-b7e5-473f15e68366
-
-import java.util.Date;
-
-//end of modifiable zone(Javadoc).........E/e8e93e79-82e1-4cc2-b7e5-473f15e68366
+//begin of modifiable zone................T/fbcc3556-82a1-4d9f-8fd7-ee4e8736b3a0
+ import java.util.Date;
+//end of modifiable zone..................E/fbcc3556-82a1-4d9f-8fd7-ee4e8736b3a0
 public class Order {
 //begin of modifiable zone(Javadoc).......C/cddc8bd3-e8d9-43b6-acaf-c291260cdf0d
 
