@@ -1,6 +1,5 @@
-package fr.isen.ordersmanagement.Interfaces.Model;
+package fr.isen.ordersmanagement.interfaces.model;
 
-import java.util.Date;
 
 //begin of modifiable zone(Javadoc).......C/bd343023-957a-4d01-958b-549589aee827
 
@@ -99,16 +98,16 @@ public class Contact {
 //begin of modifiable zone(Javadoc).......C/12abe818-31d1-4a30-a5f9-32961788886a
 
 //end of modifiable zone(Javadoc).........E/12abe818-31d1-4a30-a5f9-32961788886a
-    private Date availability;
+    private Availability[] availabilities;
 
-    public Date getAvailability() {
+    public Availability[] getAvailabilities() {
         // Automatically generated method. Please do not modify this code.
-        return this.availability;
+        return this.availabilities;
     }
 
-    public void setAvailability(final Date value) {
+    public void setAvailabilities(final Availability[] value) {
         // Automatically generated method. Please do not modify this code.
-        this.availability = value;
+        this.availabilities = value;
     }
 
 //begin of modifiable zone(Javadoc).......C/42f350b9-f3f1-4c04-8ea0-893aa104942e
@@ -144,16 +143,16 @@ public class Contact {
 //begin of modifiable zone(Javadoc).......C/7a1f38fb-f344-4a6f-b797-3ad16a05409b
 
 //end of modifiable zone(Javadoc).........E/7a1f38fb-f344-4a6f-b797-3ad16a05409b
-    private int idcontact;
+    private int idContact;
 
-    public int getIdcontact() {
+    public int getIdContact() {
         // Automatically generated method. Please do not modify this code.
-        return this.idcontact;
+        return this.idContact;
     }
 
-    public void setIdcontact(final int value) {
+    public void setIdContact(final int value) {
         // Automatically generated method. Please do not modify this code.
-        this.idcontact = value;
+        this.idContact = value;
     }
 
 }

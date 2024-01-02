@@ -1,7 +1,7 @@
-package fr.isen.OrdersManagement.Interfaces.Services;
+package fr.isen.ordersmanagement.interfaces.services;
 
 import java.util.List;
-import fr.isen.OrdersManagement.Interfaces.Model.Folder;
+import fr.isen.ordersmanagement.interfaces.model.Folder;
 
 //begin of modifiable zone(Javadoc).......C/46f26afc-9699-4f83-b518-550aff5d19d7
 

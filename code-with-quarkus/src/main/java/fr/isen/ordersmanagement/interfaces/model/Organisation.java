@@ -1,4 +1,4 @@
-package fr.isen.ordersmanagement.Interfaces.Model;
+package fr.isen.ordersmanagement.interfaces.model;
 
 
 //begin of modifiable zone................T/35388394-3135-48ac-977b-77bab928d9da
@@ -25,16 +25,16 @@ public class Organisation {
 //begin of modifiable zone(Javadoc).......C/3c29c411-98e6-434f-a82b-470d303e22bf
 
 //end of modifiable zone(Javadoc).........E/3c29c411-98e6-434f-a82b-470d303e22bf
-    private int idorganisation;
+    private int idOrganisation;
 
-    public int getIdorganisation() {
+    public int getIdOrganisation() {
         // Automatically generated method. Please do not modify this code.
-        return this.idorganisation;
+        return this.idOrganisation;
     }
 
-    public void setIdorganisation(final int value) {
+    public void setIdOrganisation(final int value) {
         // Automatically generated method. Please do not modify this code.
-        this.idorganisation = value;
+        this.idOrganisation = value;
     }
 
 //begin of modifiable zone(Javadoc).......C/520273b6-0059-433d-99dd-2e6165203217
@@ -50,21 +50,6 @@ public class Organisation {
     public void setName(final String value) {
         // Automatically generated method. Please do not modify this code.
         this.name = value;
-    }
-
-//begin of modifiable zone(Javadoc).......C/5db67184-6b0a-495b-bfbc-64a101669bce
-
-//end of modifiable zone(Javadoc).........E/5db67184-6b0a-495b-bfbc-64a101669bce
-    private Order[] orders;
-
-    public Order[] getOrders() {
-        // Automatically generated method. Please do not modify this code.
-        return this.orders;
-    }
-
-    public void setOrders(final Order[] value) {
-        // Automatically generated method. Please do not modify this code.
-        this.orders = value;
     }
 
 }

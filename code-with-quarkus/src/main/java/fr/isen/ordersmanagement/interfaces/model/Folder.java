@@ -1,4 +1,4 @@
-package fr.isen.ordersmanagement.Interfaces.Model;
+package fr.isen.ordersmanagement.interfaces.model;
 
 
 //begin of modifiable zone................T/502de916-6456-4dd1-afa5-74eab5d7be57

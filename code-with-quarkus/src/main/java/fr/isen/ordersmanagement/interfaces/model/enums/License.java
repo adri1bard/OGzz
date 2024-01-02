@@ -1,4 +1,4 @@
-package fr.isen.OrdersManagement.Interfaces.Model.enums;
+package fr.isen.ordersmanagement.interfaces.model.enums;
 
 
 //begin of modifiable zone(Javadoc).......C/3227b2de-79d0-4e39-bc33-c963dc966c36

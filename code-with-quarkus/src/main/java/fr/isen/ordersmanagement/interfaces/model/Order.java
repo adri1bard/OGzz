@@ -1,28 +1,25 @@
-package fr.isen.ordersmanagement.Interfaces.Model;
+package fr.isen.ordersmanagement.interfaces.model;
 
-import fr.isen.OrdersManagement.Interfaces.Model.enums.License;
-import fr.isen.OrdersManagement.Interfaces.Model.enums.Location;
-import fr.isen.OrdersManagement.Interfaces.Model.enums.ServiceLevel;
-
-import java.util.Date;
 
 //begin of modifiable zone(Javadoc).......C/e8e93e79-82e1-4cc2-b7e5-473f15e68366
+
+import java.util.Date;
 
 //end of modifiable zone(Javadoc).........E/e8e93e79-82e1-4cc2-b7e5-473f15e68366
 public class Order {
 //begin of modifiable zone(Javadoc).......C/cddc8bd3-e8d9-43b6-acaf-c291260cdf0d
 
 //end of modifiable zone(Javadoc).........E/cddc8bd3-e8d9-43b6-acaf-c291260cdf0d
-    private int idorder;
+    private int idOrder;
 
-    public int getIdorder() {
+    public int getIdOrder() {
         // Automatically generated method. Please do not modify this code.
-        return this.idorder;
+        return this.idOrder;
     }
 
-    public void setIdorder(final int value) {
+    public void setIdOrder(final int value) {
         // Automatically generated method. Please do not modify this code.
-        this.idorder = value;
+        this.idOrder = value;
     }
 
 //begin of modifiable zone(Javadoc).......C/6cd9d515-61e7-4cf8-9a34-0b0e5eccc3b5
@@ -43,31 +40,31 @@ public class Order {
 //begin of modifiable zone(Javadoc).......C/437fb0b5-db68-45bf-ae05-02d39a0c55af
 
 //end of modifiable zone(Javadoc).........E/437fb0b5-db68-45bf-ae05-02d39a0c55af
-    private Date date;
+    private Date dateCreation;
 
-    public Date getDate() {
+    public Date getDateCreation() {
         // Automatically generated method. Please do not modify this code.
-        return this.date;
+        return this.dateCreation;
     }
 
-    public void setDate(final Date value) {
+    public void setDateCreation(final Date value) {
         // Automatically generated method. Please do not modify this code.
-        this.date = value;
+        this.dateCreation = value;
     }
 
 //begin of modifiable zone(Javadoc).......C/ee3aeb97-a176-46a4-891d-6ea005c4d427
 
 //end of modifiable zone(Javadoc).........E/ee3aeb97-a176-46a4-891d-6ea005c4d427
-    private int idproject;
+    private Project project;
 
-    public int getIdproject() {
+    public Project getProject() {
         // Automatically generated method. Please do not modify this code.
-        return this.idproject;
+        return this.project;
     }
 
-    public void setIdproject(final int value) {
+    public void setProject(final Project value) {
         // Automatically generated method. Please do not modify this code.
-        this.idproject = value;
+        this.project = value;
     }
 
 //begin of modifiable zone(Javadoc).......C/86eafbfc-3e3e-47df-aa7f-34fa2de51b56
@@ -133,14 +130,14 @@ public class Order {
 //begin of modifiable zone(Javadoc).......C/a20979ea-3a54-44f5-a6cb-c1c7f240ab76
 
 //end of modifiable zone(Javadoc).........E/a20979ea-3a54-44f5-a6cb-c1c7f240ab76
-    private ServiceLevel serviceLevel;
+    private Service serviceLevel;
 
-    public ServiceLevel getServiceLevel() {
+    public Service getServiceLevel() {
         // Automatically generated method. Please do not modify this code.
         return this.serviceLevel;
     }
 
-    public void setServiceLevel(final ServiceLevel value) {
+    public void setServiceLevel(final Service value) {
         // Automatically generated method. Please do not modify this code.
         this.serviceLevel = value;
     }
@@ -178,16 +175,16 @@ public class Order {
 //begin of modifiable zone(Javadoc).......C/42f66a60-f521-48ce-97fa-d0a73c013d42
 
 //end of modifiable zone(Javadoc).........E/42f66a60-f521-48ce-97fa-d0a73c013d42
-    private int carboneFootPrint;
+    private int carbonFootPrint;
 
-    public int getCarboneFootPrint() {
+    public int getCarbonFootPrint() {
         // Automatically generated method. Please do not modify this code.
-        return this.carboneFootPrint;
+        return this.carbonFootPrint;
     }
 
-    public void setCarboneFootPrint(final int value) {
+    public void setCarbonFootPrint(final int value) {
         // Automatically generated method. Please do not modify this code.
-        this.carboneFootPrint = value;
+        this.carbonFootPrint = value;
     }
 
 }
