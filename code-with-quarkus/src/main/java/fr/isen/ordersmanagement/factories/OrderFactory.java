@@ -1,8 +1,8 @@
 package fr.isen.ordersmanagement.factories;
 
 import fr.isen.ordersmanagement.OrganisationResource;
-import fr.isen.ordersmanagement.interfaces.model.Order;
-import fr.isen.ordersmanagement.interfaces.model.Organisation;
+import fr.isen.ordersmanagement.interfaces.model.*;
+import fr.isen.ordersmanagement.interfaces.model.enums.ServiceLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,17 @@ public class OrderFactory {
     public Order createOrder(){
         return new Order();
     }
+
+    public Contact createContact() {return new Contact();}
+
+    public Location createLocation() {return new Location();}
+
+    public License createLicense() {return new License();}
+
+    public Availability createAvailability() {return new Availability();}
+
+    public Service createService() {return new Service();}
+
 
     public List<Order> getOrderMock(){
         Order o = new Order();

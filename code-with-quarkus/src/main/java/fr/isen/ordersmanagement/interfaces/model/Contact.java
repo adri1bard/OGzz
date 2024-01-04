@@ -83,14 +83,14 @@ public class Contact {
 //begin of modifiable zone(Javadoc).......C/47159c5f-9075-4bc4-ba13-e4f3234ca6f2
 
 //end of modifiable zone(Javadoc).........E/47159c5f-9075-4bc4-ba13-e4f3234ca6f2
-    private int postalCode;
+    private String postalCode;
 
-    public int getPostalCode() {
+    public String getPostalCode() {
         // Automatically generated method. Please do not modify this code.
         return this.postalCode;
     }
 
-    public void setPostalCode(final int value) {
+    public void setPostalCode(final String value) {
         // Automatically generated method. Please do not modify this code.
         this.postalCode = value;
     }

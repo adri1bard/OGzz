@@ -2,7 +2,9 @@ package fr.isen.ordersmanagement.interfaces.model;
 
 
 //begin of modifiable zone................T/fbcc3556-82a1-4d9f-8fd7-ee4e8736b3a0
- import java.util.Date;
+
+import java.util.Date;
+
 //end of modifiable zone..................E/fbcc3556-82a1-4d9f-8fd7-ee4e8736b3a0
 public class Order {
 //begin of modifiable zone(Javadoc).......C/cddc8bd3-e8d9-43b6-acaf-c291260cdf0d
@@ -173,14 +175,14 @@ public class Order {
 //begin of modifiable zone(Javadoc).......C/42f66a60-f521-48ce-97fa-d0a73c013d42
 
 //end of modifiable zone(Javadoc).........E/42f66a60-f521-48ce-97fa-d0a73c013d42
-    private int carbonFootPrint;
+    private double carbonFootPrint;
 
-    public int getCarbonFootPrint() {
+    public double getCarbonFootPrint() {
         // Automatically generated method. Please do not modify this code.
         return this.carbonFootPrint;
     }
 
-    public void setCarbonFootPrint(final int value) {
+    public void setCarbonFootPrint(final double value) {
         // Automatically generated method. Please do not modify this code.
         this.carbonFootPrint = value;
     }
