@@ -4,14 +4,47 @@ import fr.isen.ordersmanagement.factories.OrderFactory;
 import fr.isen.ordersmanagement.factories.OrganisationFactory;
 import fr.isen.ordersmanagement.interfaces.model.*;
 import fr.isen.ordersmanagement.interfaces.services.IOrderService;
+import io.agroal.api.AgroalDataSource;
+import jakarta.enterprise.inject.spi.CDI;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class OrderServiceImpl implements IOrderService {
+
+    AgroalDataSource dataSource = CDI.current().select(AgroalDataSource.class).get();
+
     @Override
     public int createOrder(Order order) {
         return 0;
     }
+
+    //La fonction ci-dessous est en cours de réalisation
+    /*@Override
+    public Order getOrder(int orderId) {
+        Order order = null;
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM `order` WHERE idOrder = " + orderId);
+            while(rs.next()){
+                order = OrderFactory.getInstance().createOrder();
+                order.setIdOrder(rs.getInt(1));
+                order.setName(rs.getString(2));
+                order.setDateCreation(rs.getDate(3));
+                order.setSolutionName(rs.getString(5));
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return order;
+    }*/
 
     @Override
     public Order getOrder(int orderId) {
