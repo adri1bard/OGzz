@@ -4,17 +4,25 @@ package fr.isen.ordersmanagement.interfaces.model.enums;
 //begin of modifiable zone(Javadoc).......C/ccc18fb3-55a0-44a2-a73a-5711ef09e14b
 
 //end of modifiable zone(Javadoc).........E/ccc18fb3-55a0-44a2-a73a-5711ef09e14b
-public enum Area {
-//begin of modifiable zone(Javadoc).......C/9fddc88e-8f71-4c9e-85fc-134bb499c3f7
-
-//end of modifiable zone(Javadoc).........E/9fddc88e-8f71-4c9e-85fc-134bb499c3f7
-    Europe,
-//begin of modifiable zone(Javadoc).......C/bb3ea651-2de2-426f-99cd-60408bdf6005
-
-//end of modifiable zone(Javadoc).........E/bb3ea651-2de2-426f-99cd-60408bdf6005
+public enum Area{
     NorthAmerica,
-//begin of modifiable zone(Javadoc).......C/057aac85-20be-4dea-ab4e-aa396d02ed19
-
-//end of modifiable zone(Javadoc).........E/057aac85-20be-4dea-ab4e-aa396d02ed19
+    Europe,
     Asia;
+
+
+    public static Area convert(int num) {
+        Area retour = null;
+        switch (num){
+            case 1:
+                retour =  NorthAmerica;
+                break;
+            case 2:
+                retour = Europe;
+                break;
+            case 3:
+                retour = Asia;
+                break;
+        }
+        return retour;
+    }
 }
