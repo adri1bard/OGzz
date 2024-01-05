@@ -1,6 +1,7 @@
 package fr.isen.ordersmanagement.services.impl;
 
 import fr.isen.ordersmanagement.factories.OrderFactory;
+import fr.isen.ordersmanagement.interfaces.model.License;
 import fr.isen.ordersmanagement.interfaces.model.*;
 import fr.isen.ordersmanagement.interfaces.model.enums.Area;
 import fr.isen.ordersmanagement.interfaces.model.enums.LicenseLevel;
@@ -228,18 +229,19 @@ public class OrderServiceImpl implements IOrderService {
             String updateQuery = "UPDATE location SET " + "bill=" + location.getBill() + ", " + "carbonFootPrint=" + location.getCarbonFootPrint() + ", " + "area=" + area + " " + "WHERE idLocation=" + locationId;
             stmt.executeUpdate(updateQuery);
 
-            List<Location> locations = getLocations();
-            for(Location l: locations) {
-                if(l.getIdLocation() == locationId) {
-                    return l;
-                }
-            }
-
             stmt.close();
             conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        List<Location> locations = getLocations();
+        for(Location l: locations) {
+            if(l.getIdLocation() == locationId) {
+                return l;
+            }
+        }
+
         return null;
     }
 
@@ -271,11 +273,55 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public int createLicense(License license) {
-        return 0;
+        int id = -1;
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+            int licenseLevel = LicenseLevel.convertEnumToInt(license.getLicense());
+            String insertQuery = "INSERT INTO license (bill, carbonFootPrint, license) " +
+                    "VALUES (" + license.getBill() + ", " + license.getCarbonFootPrint() + ", " +
+                    licenseLevel + ")";
+
+            stmt.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
     }
 
     @Override
     public License updateLicense(License license, int licenseId) {
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+
+            int licenseLevel = LicenseLevel.convertEnumToInt(license.getLicense());
+            String updateQuery = "UPDATE license SET " + "bill=" + license.getBill() + ", " + "carbonFootPrint=" + license.getCarbonFootPrint() + ", " + "license=" + licenseLevel + " " + "WHERE idLicense=" + licenseId;
+            stmt.executeUpdate(updateQuery);
+
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<License> licenses = getLicenses();
+        for(License l: licenses) {
+            if(l.getIdLicense() == licenseId) {
+                return l;
+            }
+        }
         return null;
     }
 
@@ -292,12 +338,8 @@ public class OrderServiceImpl implements IOrderService {
                 availability.setIdAvailability(rs.getInt(1));
                 availability.setMorning(rs.getBoolean(2));
                 availability.setAfternoon(rs.getBoolean(3));
-                /* *
                 availability.setDay(rs.getInt(4));
 
-                //A voir plus tard pour celui-ci
-                availability.setIdContact(rs.getInt(5));
-                * */
                 availabilities.add(availability);
             }
             stmt.close();
@@ -336,6 +378,29 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public Availability updateAvailability(Availability availability, int id) {
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+
+            int availabilityDay = WeekDay.convertEnumToInt(availability.getDay());
+            //ce qui est vraiment sympa c'est que java converti les bool en int tout seul
+            String updateQuery = "UPDATE availability SET " + "morning=" + availability.isMorning() + ", " + "afternoon=" + availability.isAfternoon() + ", " + "day=" + availabilityDay + " " + "WHERE idAvailability=" + id;
+            stmt.executeUpdate(updateQuery);
+
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<Availability> availabilities = getAvailabilities();
+        for(Availability l: availabilities) {
+            if(l.getIdAvailability() == id) {
+                return l;
+            }
+        }
         return null;
     }
 
@@ -350,16 +415,6 @@ public class OrderServiceImpl implements IOrderService {
             while(rs.next()){
                 Service service = OrderFactory.getInstance().createService();
                 service.setIdService(rs.getInt(1));
-
-                /* *
-                A compléter avec Service 1 à 4
-                 service.setService();
-
-                int service1 = rs.getInt(2);
-                int service2 = rs.getInt(3);
-                int service3 = rs.getInt(4);
-                int service4 = rs.getInt(5);
-                * */
 
                 service.setBill(rs.getDouble(6));
                 service.setCarbonFootPrint(rs.getDouble(7));
@@ -379,10 +434,52 @@ public class OrderServiceImpl implements IOrderService {
     }
     @Override
     public int createServiceLevel(Service serviceLevel) {
-        return 0;
+        int id = -1;
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+            int level = ServiceLevel.convertEnumToInt(serviceLevel.getLevel());
+            String insertQuery = "INSERT INTO services (service1, service2, service3, service4, bill, carbonFootPrint, level) " +
+                    "VALUES (" + serviceLevel.Service1 + ", " + serviceLevel.Service2 + ", " + serviceLevel.Service3 + ", " + serviceLevel.Service4 + ", " + serviceLevel.getBill() + ", " + serviceLevel.getCarbonFootPrint() + ", " + level + ")";
+
+            stmt.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
     }
     @Override
     public Service updateServiceLevel(Service serviceLevel, int id) {
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+
+            int level = ServiceLevel.convertEnumToInt(serviceLevel.getLevel());
+            String updateQuery = "UPDATE services SET " +  "service1= " +serviceLevel.Service1 + ", service2= " + serviceLevel.Service2 + ", service3= " + serviceLevel.Service3 + ", service4= " + serviceLevel.Service4 + ", bill= " + serviceLevel.getBill() + ", carbonFootPrint= " + serviceLevel.getCarbonFootPrint() + ", level= " + level;
+            stmt.executeUpdate(updateQuery);
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<Service> services = getLevels();
+        for(Service l: services) {
+            if(l.getIdService() == id) {
+                return l;
+            }
+        }
         return null;
     }
 

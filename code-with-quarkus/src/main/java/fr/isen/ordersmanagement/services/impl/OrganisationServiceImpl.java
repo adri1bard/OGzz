@@ -32,7 +32,6 @@ public class OrganisationServiceImpl implements IOrganisationService {
             ResultSet rs = stmt.executeQuery("SELECT idorganisation, orgname FROM organisation WHERE idorganisation = " + organisationId);
             while(rs.next()){
                 organisation = OrganisationFactory.getInstance().createOrganisation();
-                System.out.println(rs.getInt(1));
                 organisation.setIdOrganisation(rs.getInt(1));
                 organisation.setName(rs.getString(2));
             }

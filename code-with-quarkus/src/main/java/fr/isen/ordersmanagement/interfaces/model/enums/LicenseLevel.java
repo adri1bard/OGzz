@@ -13,4 +13,10 @@ public enum LicenseLevel {
         else if (num == 2) return Shared;
         return null;
     }
+
+    public static int convertEnumToInt(LicenseLevel licenseEnum){
+        if(licenseEnum == Dedicated) return 1;
+        else if (licenseEnum == Shared) return 2;
+        return 0;
+    }
 }

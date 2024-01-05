@@ -33,4 +33,21 @@ public enum ServiceLevel {
         }
         return retour;
     }
+
+    public static int convertEnumToInt(ServiceLevel level){
+        int retour = 0;
+        switch (level){
+            case Essential:
+                retour = 1;
+                break;
+            case Advanced:
+                retour = 2;
+                break;
+            case Premium:
+                retour = 3;
+                break;
+        }
+
+        return retour;
+    }
 }

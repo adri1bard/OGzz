@@ -47,9 +47,10 @@ public class Availability {
         return this.Day;
     }
 
-    public void setDay(final WeekDay value) {
+    public void setDay(final int value) {
         // Automatically generated method. Please do not modify this code.
-        this.Day = value;
+        this.Day = WeekDay.convertIntToEnum(value);
+
     }
 
 //begin of modifiable zone(Javadoc).......C/c358dfd0-bd83-445c-83c4-e6ddd6343ec6

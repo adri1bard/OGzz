@@ -6,29 +6,10 @@ import fr.isen.ordersmanagement.interfaces.model.enums.ServiceLevel;
 
 //end of modifiable zone(Javadoc).........E/fa7c810f-ee8e-4189-9e87-e4a34de061d9
 public class Service {
-//begin of modifiable zone(Javadoc).......C/ec310bdf-8930-492e-995b-56fe3a3bb10f
-
-//end of modifiable zone(Javadoc).........E/ec310bdf-8930-492e-995b-56fe3a3bb10f
     public boolean Service1;
-
-//begin of modifiable zone(Javadoc).......C/d34f75ec-ffc6-4874-ac94-ee4aed205608
-
-//end of modifiable zone(Javadoc).........E/d34f75ec-ffc6-4874-ac94-ee4aed205608
     public boolean Service2;
-
-//begin of modifiable zone(Javadoc).......C/058a8c5b-fa13-471a-b31c-8b2817d62d68
-
-//end of modifiable zone(Javadoc).........E/058a8c5b-fa13-471a-b31c-8b2817d62d68
     public boolean Service3;
-
-//begin of modifiable zone(Javadoc).......C/0464d499-9da0-4e5b-a994-1f1ec9a08dc7
-
-//end of modifiable zone(Javadoc).........E/0464d499-9da0-4e5b-a994-1f1ec9a08dc7
     public boolean Service4;
-
-//begin of modifiable zone(Javadoc).......C/4a217e50-a16e-4b67-8d8f-f0cd304544b7
-
-//end of modifiable zone(Javadoc).........E/4a217e50-a16e-4b67-8d8f-f0cd304544b7
     private double bill;
 
     public double getBill() {
@@ -40,10 +21,6 @@ public class Service {
         // Automatically generated method. Please do not modify this code.
         this.bill = value;
     }
-
-//begin of modifiable zone(Javadoc).......C/44665ef5-0e6a-4be0-aa4b-a2c83a149f60
-
-//end of modifiable zone(Javadoc).........E/44665ef5-0e6a-4be0-aa4b-a2c83a149f60
     private double carbonFootPrint;
 
     public double getCarbonFootPrint() {
@@ -55,10 +32,6 @@ public class Service {
         // Automatically generated method. Please do not modify this code.
         this.carbonFootPrint = value;
     }
-
-//begin of modifiable zone(Javadoc).......C/c957e789-eac4-466c-9b0c-c495b37087ae
-
-//end of modifiable zone(Javadoc).........E/c957e789-eac4-466c-9b0c-c495b37087ae
     private ServiceLevel level;
 
     public ServiceLevel getLevel() {
@@ -69,11 +42,30 @@ public class Service {
     public void setLevel(final ServiceLevel value) {
         // Automatically generated method. Please do not modify this code.
         this.level = value;
+        switch (value){
+            case Essential:
+                this.Service1 = true;
+                this.Service2 = true;
+                this.Service3 = false;
+                this.Service4 = false;
+                break;
+
+            case Advanced:
+                this.Service1 = true;
+                this.Service2 = true;
+                this.Service3 = true;
+                this.Service4 = false;
+                break;
+
+            case Premium:
+                this.Service1 = true;
+                this.Service2 = true;
+                this.Service3 = true;
+                this.Service4 = true;
+                break;
+        }
     }
 
-//begin of modifiable zone(Javadoc).......C/07ac932a-4671-4745-bb45-67bfbd776d4d
-
-//end of modifiable zone(Javadoc).........E/07ac932a-4671-4745-bb45-67bfbd776d4d
     private int idService;
 
     public int getIdService() {
@@ -86,13 +78,8 @@ public class Service {
         this.idService = value;
     }
 
-//begin of modifiable zone(Javadoc).......C/83e122e2-cc63-445f-b96c-6af989e040eb
-
-//end of modifiable zone(Javadoc).........E/83e122e2-cc63-445f-b96c-6af989e040eb
     public void setService(final ServiceLevel Parameter) {
-//begin of modifiable zone(JavaCode)......C/83e122e2-cc63-445f-b96c-6af989e040eb
 
-//end of modifiable zone(JavaCode)........E/83e122e2-cc63-445f-b96c-6af989e040eb
     }
 
 }
