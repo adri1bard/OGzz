@@ -24,7 +24,7 @@ public class OrganisationServiceImpl implements IOrganisationService {
         try {
             conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT idorganisation, orgname FROM organisation");
+            ResultSet rs = stmt.executeQuery("SELECT idorganisation, orgname FROM organisation WHERE idorganisation = " + organisationId);
             while(rs.next()){
                 organisation = OrganisationFactory.getInstance().createOrganisation();
                 System.out.println(rs.getInt(1));
@@ -39,14 +39,4 @@ public class OrganisationServiceImpl implements IOrganisationService {
         return organisation;
     }
 
-    /*@Override
-    public Organisation getOrganisation(int organisationId) {
-        List<Organisation> organisationList = OrganisationFactory.getInstance().getOrganisationMock();
-        for(Organisation organisation: organisationList) {
-            if (organisation.getIdOrganisation() == organisationId) {
-                return organisation;
-            }
-        }
-        return null;
-    }*/
 }

@@ -35,7 +35,7 @@ public interface IOrderService {
 //begin of modifiable zone(Javadoc).......C/c9fbe4db-e755-432c-bdab-2600f2701ade
 
 //end of modifiable zone(Javadoc).........E/c9fbe4db-e755-432c-bdab-2600f2701ade
-    int createContact(final int orderId, final Contact contact);
+    int createContact(final Contact contact);
 
 //begin of modifiable zone(Javadoc).......C/5573829b-211a-4305-982e-0127bfd18b12
 
@@ -50,7 +50,7 @@ public interface IOrderService {
 //begin of modifiable zone(Javadoc).......C/4636366c-0e88-495a-9c83-d116abfb02c7
 
 //end of modifiable zone(Javadoc).........E/4636366c-0e88-495a-9c83-d116abfb02c7
-    Contact updateContact(final Contact contact, final int orderId, final int contactId);
+    Contact updateContact(final Contact contact, final int contactId);
 
 //begin of modifiable zone(Javadoc).......C/c457c9d0-a3b4-4210-87fb-63f4624b0d9d
 

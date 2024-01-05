@@ -20,11 +20,6 @@ public class OrderServiceImpl implements IOrderService {
     AgroalDataSource dataSource = CDI.current().select(AgroalDataSource.class).get();
 
     @Override
-    public int createOrder(Order order) {
-        return 0;
-    }
-
-    @Override
     public Order getOrder(int orderId) {
         Order order = null;
         Connection conn = null;
@@ -60,17 +55,17 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    public int createOrder(Order order) {
+        return 0;
+    }
+
+    @Override
     public Order updateOrder(Order order, int orderId) {
         return null;
     }
 
     @Override
     public int createAvailability(Availability availability) {
-        return 0;
-    }
-
-    @Override
-    public int createContact(int orderId, Contact contact) {
         return 0;
     }
 
@@ -82,11 +77,6 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public int createServiceLevel(Service serviceLevel) {
         return 0;
-    }
-
-    @Override
-    public Contact updateContact(Contact contact, int orderId, int contactId) {
-        return null;
     }
 
     @Override
@@ -141,6 +131,51 @@ public class OrderServiceImpl implements IOrderService {
             throw new RuntimeException(e);
         }
         return contact;
+    }
+
+    @Override
+    public int createContact(Contact contact) {
+        int id = -1;
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+
+            String insertQuery = "INSERT INTO contact (firstName, lastName, country, city, streetName, postalCode, email, phoneNumber) " +
+                    "VALUES (" + "'" + contact.getFirstName() + "', '" + contact.getLastName() + "', '" + contact.getCountry() + "', '" +
+                    contact.getCity() + "', '" + contact.getStreetName() + "', '" + contact.getPostalCode() + "', '" +
+                    contact.getEmail() + "', '" + contact.getPhoneNumber() + "')";
+
+            stmt.executeUpdate(insertQuery);
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM contact WHERE firstName = '" + contact.getFirstName() + "'" + "AND lastName = '" + contact.getLastName() + "'");
+            while (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
+    }
+
+    @Override
+    public Contact updateContact(Contact contact, int contactId) {
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+            String updateQuery = "UPDATE contact SET firstName='" + contact.getFirstName() + "', lastName='" + contact.getLastName() + "', country='" + contact.getCountry() + "', city='" + contact.getCity() + "', streetName='" + contact.getStreetName() + "', postalCode='" + contact.getPostalCode() + "', email='" + contact.getEmail() + "', phoneNumber='" + contact.getPhoneNumber() + "' WHERE idContact=" + contactId;
+            stmt.executeUpdate(updateQuery);
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return getContact(contactId);
     }
 
     @Override
