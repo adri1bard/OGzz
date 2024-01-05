@@ -1,9 +1,10 @@
 package fr.isen.ordersmanagement.services.impl;
 
 import fr.isen.ordersmanagement.factories.OrderFactory;
-import fr.isen.ordersmanagement.factories.OrganisationFactory;
 import fr.isen.ordersmanagement.interfaces.model.*;
 import fr.isen.ordersmanagement.interfaces.model.enums.Area;
+import fr.isen.ordersmanagement.interfaces.model.enums.LicenseLevel;
+import fr.isen.ordersmanagement.interfaces.model.enums.ServiceLevel;
 import fr.isen.ordersmanagement.interfaces.services.IOrderService;
 import io.agroal.api.AgroalDataSource;
 import jakarta.enterprise.inject.spi.CDI;
@@ -36,10 +37,33 @@ public class OrderServiceImpl implements IOrderService {
                 order.setSolutionName(rs.getString(5));
                 order.setDescription(rs.getString(6));
 
+                int idServiceLevel = rs.getInt(7);
+                List<Service> services = getLevels();
+                for(Service s: services) {
+                    if(s.getIdService() == idServiceLevel) {
+                        order.setServiceLevel(s);
+                    }
+                }
+
+
                 order.setPrice(rs.getDouble(8));
                 order.setCarbonFootPrint(rs.getDouble(9));
 
-                // FINIR D'INTÉGRER LICENSE, SERVICE LEVEL ETC...
+                int idLicense = rs.getInt(10);
+                List<License> licenses = getLicenses();
+                for(License l: licenses) {
+                    if(l.getIdLicense() == idLicense) {
+                        order.setLicense(l);
+                    }
+                }
+
+                int idLocation = rs.getInt(11);
+                List<Location> locations = getLocations();
+                for(Location l: locations) {
+                    if(l.getIdLocation() == idLocation) {
+                        order.setLocation(l);
+                    }
+                }
 
                 //POSSIBLE ONE-LINERS
                 int idContact = rs.getInt(12);
@@ -191,9 +215,9 @@ public class OrderServiceImpl implements IOrderService {
                 location.setIdLocation(rs.getInt(1));
                 location.setBill(rs.getDouble(2));
                 location.setCarbonFootPrint(rs.getDouble(3));
-                /*int areaValue = rs.getInt(4);
-                Area area =
-                location.setArea(area);*/
+                int areaValue = rs.getInt(4);
+                Area area = Area.convert(areaValue);
+                location.setArea(area);
                 locations.add(location);
             }
             stmt.close();
@@ -211,15 +235,15 @@ public class OrderServiceImpl implements IOrderService {
         try {
             conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM licence");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM license");
             while(rs.next()){
                 License license = OrderFactory.getInstance().createLicense();
                 license.setIdLicense(rs.getInt(1));
                 license.setBill(rs.getDouble(2));
                 license.setCarbonFootPrint(rs.getDouble(3));
-                /*int licenseValue = rs.getInt(4);
-                LicenseLevel licenseLevel =
-                license.setLicense(licenseValue);*/
+                int licenseValue = rs.getInt(4);
+                LicenseLevel licenseLevel = LicenseLevel.convert(licenseValue);
+                license.setLicense(licenseLevel);
                 licenses.add(license);
             }
             stmt.close();
@@ -278,11 +302,10 @@ public class OrderServiceImpl implements IOrderService {
                 service.setBill(rs.getDouble(6));
                 service.setCarbonFootPrint(rs.getDouble(7));
 
-                /* *
-                  int level = rs.getInt(8);
-                ServiceLevel serviceLevel =
-                service.setLevel(level);
-                 * */
+                int level = rs.getInt(8);
+                ServiceLevel serviceLevel = ServiceLevel.convert(level);
+                service.setLevel(serviceLevel);
+
                 levels.add(service);
             }
             stmt.close();
