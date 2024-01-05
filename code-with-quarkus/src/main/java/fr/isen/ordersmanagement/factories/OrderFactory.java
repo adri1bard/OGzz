@@ -31,6 +31,8 @@ public class OrderFactory {
 
     public Service createService() {return new Service();}
 
+    public Project createProject() { return new Project();}
+
 
     public List<Order> getOrderMock(){
         Order o = new Order();

@@ -6,6 +6,7 @@ import fr.isen.ordersmanagement.interfaces.model.Contact;
 import fr.isen.ordersmanagement.interfaces.model.License;
 import fr.isen.ordersmanagement.interfaces.model.Location;
 import fr.isen.ordersmanagement.interfaces.model.Order;
+import fr.isen.ordersmanagement.interfaces.model.Project;
 import fr.isen.ordersmanagement.interfaces.model.Service;
 
 //begin of modifiable zone(Javadoc).......C/6c89eabd-f62a-4b39-a1ec-9997b36226a6
@@ -30,7 +31,7 @@ public interface IOrderService {
 //begin of modifiable zone(Javadoc).......C/bd929dd7-a19b-4272-b162-697d3284612c
 
 //end of modifiable zone(Javadoc).........E/bd929dd7-a19b-4272-b162-697d3284612c
-    int createAvailability(final Availability availability);
+    int createAvailability(final Availability availability, final int idContact);
 
 //begin of modifiable zone(Javadoc).......C/c9fbe4db-e755-432c-bdab-2600f2701ade
 
@@ -101,5 +102,10 @@ public interface IOrderService {
 
 //end of modifiable zone(Javadoc).........E/02731674-5c72-4ad8-a30d-85cbb1863526
     List<Service> getLevels();
+
+//begin of modifiable zone(Javadoc).......C/e5c7159d-19fd-48fc-a8b3-a907a703e7e4
+
+//end of modifiable zone(Javadoc).........E/e5c7159d-19fd-48fc-a8b3-a907a703e7e4
+    Project getProject(final int idProject);
 
 }
