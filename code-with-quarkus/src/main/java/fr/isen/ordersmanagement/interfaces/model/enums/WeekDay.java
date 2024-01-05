@@ -27,7 +27,6 @@ public enum WeekDay {
             case 5:
                 retour = Friday;
                 break;
-
             case 6:
                 retour = Saturday;
                 break;
@@ -35,6 +34,34 @@ public enum WeekDay {
                 retour = Sunday;
                 break;
 
+        }
+        return retour;
+    }
+
+    public static int convertEnumToInt(WeekDay day) {
+        int retour = -1;
+        switch (day){
+            case Monday:
+                retour = 1;
+                break;
+            case Tuesday:
+                retour = 2;
+                break;
+            case Wednesday:
+                retour = 3;
+                break;
+            case Thursday:
+                retour = 4;
+                break;
+            case Friday:
+                retour = 5;
+                break;
+            case Saturday:
+                retour = 6;
+                break;
+            case Sunday:
+                retour = 7;
+                break;
         }
         return retour;
     }

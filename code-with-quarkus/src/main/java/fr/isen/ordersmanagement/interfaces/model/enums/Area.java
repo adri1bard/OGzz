@@ -10,7 +10,7 @@ public enum Area{
     Asia;
 
 
-    public static Area convert(int num) {
+    public static Area convertIntToEnum(int num) {
         Area retour = null;
         switch (num){
             case 1:
@@ -24,5 +24,21 @@ public enum Area{
                 break;
         }
         return retour;
+    }
+
+    public static int convertEnumToInt(Area area) {
+        int num = -1;
+        switch (area){
+            case NorthAmerica:
+                num = 1;
+                break;
+            case Europe:
+                num = 2;
+                break;
+            case Asia:
+                num = 3;
+                break;
+        }
+        return num;
     }
 }
