@@ -10,8 +10,8 @@ public class Location {
     //location par defaut sera usa
     public Location(){
         this.idLocation = 250;
-        this.bill = 0.151;
-        this.carbonFootPrint = 2;
+        this.bill = 100;
+        this.carbonFootPrint = 0.151;
         this.area = Area.NorthAmerica;
     }
 

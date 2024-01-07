@@ -26,7 +26,7 @@ public class Order {
         this.setCurrentState(State.Current);
 
         this.price = this.license.getBill() + this.serviceLevel.getBill() + this.location.getBill();
-        this.carbonFootPrint = this.license.getCarbonFootPrint() + this.serviceLevel.getBill() + this.location.getBill();
+        this.carbonFootPrint = this.license.getCarbonFootPrint() + this.serviceLevel.getCarbonFootPrint() + this.location.getCarbonFootPrint();
     }
     private int idOrder;
 

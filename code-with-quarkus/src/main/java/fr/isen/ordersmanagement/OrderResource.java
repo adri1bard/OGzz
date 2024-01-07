@@ -62,9 +62,11 @@ public class OrderResource {
     public Availability updateAvailability(Availability availability, int idAvailability){ return  orderService.updateAvailability(availability, idAvailability);}
 
     //LOCATION
-    @POST
-    @Path("/{idOrder}/contact/{idContact}/location/{idLocation}")
-    public Order updateOrderLocation(Location location, int idOrder) {return orderService.updateLocation(location, idOrder);}
+    @PUT
+    @Path("/{idOrder}/location")
+    public Order updateOrderLocation(Location location, int idOrder) {
+        return orderService.updateLocation(location, idOrder);
+    }
 
     //LICENSE
     @PUT

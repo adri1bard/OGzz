@@ -254,9 +254,12 @@ public class OrderServiceImpl implements IOrderService {
 
             Order oldOrder = getOrder(orderId);
             Double newPrice = oldOrder.getPrice() - oldOrder.getLocation().getBill() + location.getBill();
+            newPrice = (double) (Math.round(newPrice * 1000)/1000);
             Double newFootPrint = oldOrder.getCarbonFootPrint() - oldOrder.getLocation().getCarbonFootPrint() + location.getCarbonFootPrint();
+            newFootPrint = (double) (Math.round(newFootPrint * 1000)/1000);
 
             int area = Area.convertEnumToInt(location.getArea());
+
             String updateQuery = "UPDATE `order` SET location=" + location.getIdLocation()  + ", price="+ newPrice + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
             stmt.executeUpdate(updateQuery);
 
@@ -305,10 +308,12 @@ public class OrderServiceImpl implements IOrderService {
 
             Order oldOrder = getOrder(orderId);
             Double newPrice = oldOrder.getPrice() - oldOrder.getLicense().getBill() + license.getBill();
+            newPrice = (double) (Math.round(newPrice * 1000)/1000);
             Double newFootPrint = oldOrder.getCarbonFootPrint() - oldOrder.getLicense().getCarbonFootPrint() + license.getCarbonFootPrint();
+            newFootPrint = (double) (Math.round(newFootPrint * 1000)/1000);
 
             int licenseLevel = LicenseLevel.convertEnumToInt(license.getLicense());
-            String updateQuery = "UPDATE `order` SET idLicense =" + license.getIdLicense()  + ", price="+ newPrice + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;;
+            String updateQuery = "UPDATE `order` SET idLicense =" + license.getIdLicense()  + ", price="+ newPrice + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
             stmt.executeUpdate(updateQuery);
 
 
@@ -460,7 +465,9 @@ public class OrderServiceImpl implements IOrderService {
 
         Order oldOrder = getOrder(orderId);
         Double newPrice = oldOrder.getPrice() - oldOrder.getServiceLevel().getBill() + serviceLevel.getBill();
+        newPrice = (double) (Math.round(newPrice * 1000)/1000);
         Double newFootPrint = oldOrder.getCarbonFootPrint() - oldOrder.getServiceLevel().getCarbonFootPrint() + serviceLevel.getCarbonFootPrint();
+        newFootPrint = (double) (Math.round(newFootPrint * 1000)/1000);
         try {
             conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
