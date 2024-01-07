@@ -132,7 +132,6 @@ public class OrderServiceImpl implements IOrderService {
                     ", location=" + order.getLocation().getIdLocation() + ", contact=" + (contact!= 0 ? contact: "null")
                     + " WHERE idOrder = " + orderId;
 
-            JOptionPane.showMessageDialog(null, updateQuery);
             stmt.executeUpdate(updateQuery);
 
 
@@ -169,6 +168,8 @@ public class OrderServiceImpl implements IOrderService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        contact.setAvailabilities( getRelatedAvailability(contactId).toArray(Availability[]::new));
         return contact;
     }
 
@@ -184,6 +185,8 @@ public class OrderServiceImpl implements IOrderService {
                     "VALUES (" + "'" + contact.getFirstName() + "', '" + contact.getLastName() + "', '" + contact.getCountry() + "', '" +
                     contact.getCity() + "', '" + contact.getStreetName() + "', '" + contact.getPostalCode() + "', '" +
                     contact.getEmail() + "', '" + contact.getPhoneNumber() + "')";
+
+            //pas besoin de availability, car c'est les availability qui ont des fk sur un seul contact
 
             stmt.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
 
@@ -243,30 +246,11 @@ public class OrderServiceImpl implements IOrderService {
         }
         return locations;
     }
+
+    //inutile
     @Override
     public int createLocation(Location location) {
         int id = -1;
-        Connection conn = null;
-        try {
-            conn = dataSource.getConnection();
-            Statement stmt = conn.createStatement();
-            int area = Area.convertEnumToInt(location.getArea());
-            String insertQuery = "INSERT INTO location (bill, carbonFootPrint, area) " +
-                    "VALUES (" + location.getBill() + ", " + location.getCarbonFootPrint() + ", " +
-                    area + ")";
-
-            stmt.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
-
-            ResultSet generatedKeys = stmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                id = generatedKeys.getInt(1);
-            }
-
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         return id;
     }
     @Override
@@ -282,7 +266,7 @@ public class OrderServiceImpl implements IOrderService {
 
             int area = Area.convertEnumToInt(location.getArea());
             //String updateQuery = "UPDATE location SET " + "bill=" + location.getBill() + ", " + "carbonFootPrint=" + location.getCarbonFootPrint() + ", " + "area=" + area + " " + "WHERE idLocation=" + locationId;
-            String updateQuery = "UPDATE 'order' SET location=" + location.getIdLocation()  + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
+            String updateQuery = "UPDATE `order` SET location=" + location.getIdLocation()  + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
             stmt.executeUpdate(updateQuery);
 
             stmt.close();
@@ -327,30 +311,11 @@ public class OrderServiceImpl implements IOrderService {
         return licenses;
     }
 
+
+    //inutile
     @Override
     public int createLicense(License license) {
         int id = -1;
-        Connection conn = null;
-        try {
-            conn = dataSource.getConnection();
-            Statement stmt = conn.createStatement();
-            int licenseLevel = LicenseLevel.convertEnumToInt(license.getLicense());
-            String insertQuery = "INSERT INTO license (bill, carbonFootPrint, license) " +
-                    "VALUES (" + license.getBill() + ", " + license.getCarbonFootPrint() + ", " +
-                    licenseLevel + ")";
-
-            stmt.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
-
-            ResultSet generatedKeys = stmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                id = generatedKeys.getInt(1);
-            }
-
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         return id;
     }
 
@@ -367,7 +332,7 @@ public class OrderServiceImpl implements IOrderService {
 
             int licenseLevel = LicenseLevel.convertEnumToInt(license.getLicense());
             //String updateQuery = "UPDATE license SET " + "bill=" + license.getBill() + ", " + "carbonFootPrint=" + license.getCarbonFootPrint() + ", " + "license=" + licenseLevel + " " + "WHERE idLicense=" + licenseId;
-            String updateQuery = "UPDATE 'order' SET idLicense =" + license.getIdLicense()  + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;;
+            String updateQuery = "UPDATE `order` SET idLicense =" + license.getIdLicense()  + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;;
             stmt.executeUpdate(updateQuery);
 
 
@@ -394,6 +359,30 @@ public class OrderServiceImpl implements IOrderService {
             conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM availability");
+            while(rs.next()){
+                Availability availability = OrderFactory.getInstance().createAvailability();
+                availability.setIdAvailability(rs.getInt(1));
+                availability.setMorning(rs.getBoolean(2));
+                availability.setAfternoon(rs.getBoolean(3));
+                availability.setDay(rs.getInt(4));
+
+                availabilities.add(availability);
+            }
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return availabilities;
+    }
+
+    public List<Availability> getRelatedAvailability(int idContact){
+        List<Availability> availabilities = new ArrayList<>();
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM availability WHERE idContact=" + idContact);
             while(rs.next()){
                 Availability availability = OrderFactory.getInstance().createAvailability();
                 availability.setIdAvailability(rs.getInt(1));
@@ -498,28 +487,7 @@ public class OrderServiceImpl implements IOrderService {
     //inutile
     @Override
     public int createServiceLevel(Service serviceLevel) {
-        int id = -1;
-        Connection conn = null;
-        try {
-            conn = dataSource.getConnection();
-            Statement stmt = conn.createStatement();
-            int level = ServiceLevel.convertEnumToInt(serviceLevel.getLevel());
-            String insertQuery = "INSERT INTO services (service1, service2, service3, service4, bill, carbonFootPrint, level) " +
-                    "VALUES (" + serviceLevel.Service1 + ", " + serviceLevel.Service2 + ", " + serviceLevel.Service3 + ", " + serviceLevel.Service4 + ", " + serviceLevel.getBill() + ", " + serviceLevel.getCarbonFootPrint() + ", " + level + ")";
-
-            stmt.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
-
-            ResultSet generatedKeys = stmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                id = generatedKeys.getInt(1);
-            }
-
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return id;
+        return -1;
     }
     @Override
     public Service updateServiceLevel(Service serviceLevel, int orderId) {
@@ -534,7 +502,7 @@ public class OrderServiceImpl implements IOrderService {
 
             int level = ServiceLevel.convertEnumToInt(serviceLevel.getLevel());
             //String updateQuery = "UPDATE services SET " +  "service1= " +serviceLevel.Service1 + ", service2= " + serviceLevel.Service2 + ", service3= " + serviceLevel.Service3 + ", service4= " + serviceLevel.Service4 + ", bill= " + serviceLevel.getBill() + ", carbonFootPrint= " + serviceLevel.getCarbonFootPrint() + ", level= " + level;
-            String updateQuery="UPDATE 'order SET serviceLevel=" + serviceLevel.getIdService() + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
+            String updateQuery="UPDATE `order` SET serviceLevel=" + serviceLevel.getIdService() + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
             stmt.executeUpdate(updateQuery);
 
             stmt.close();
