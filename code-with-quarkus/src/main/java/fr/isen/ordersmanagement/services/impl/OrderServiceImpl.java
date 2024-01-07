@@ -161,7 +161,6 @@ public class OrderServiceImpl implements IOrderService {
                 contact.setPostalCode(rs.getString(7));
                 contact.setEmail(rs.getString(8));
                 contact.setPhoneNumber(rs.getString(9));
-
             }
             stmt.close();
             conn.close();
@@ -246,13 +245,6 @@ public class OrderServiceImpl implements IOrderService {
         }
         return locations;
     }
-
-    //inutile
-    @Override
-    public int createLocation(Location location) {
-        int id = -1;
-        return id;
-    }
     @Override
     public Location updateLocation(Location location, int orderId) {
         Connection conn = null;
@@ -309,14 +301,6 @@ public class OrderServiceImpl implements IOrderService {
             throw new RuntimeException(e);
         }
         return licenses;
-    }
-
-
-    //inutile
-    @Override
-    public int createLicense(License license) {
-        int id = -1;
-        return id;
     }
 
     @Override
@@ -484,11 +468,6 @@ public class OrderServiceImpl implements IOrderService {
         return levels;
     }
 
-    //inutile
-    @Override
-    public int createServiceLevel(Service serviceLevel) {
-        return -1;
-    }
     @Override
     public Service updateServiceLevel(Service serviceLevel, int orderId) {
         Connection conn = null;
