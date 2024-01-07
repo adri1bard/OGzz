@@ -1,6 +1,7 @@
 package fr.isen.ordersmanagement;
 
 import fr.isen.ordersmanagement.interfaces.model.*;
+import fr.isen.ordersmanagement.interfaces.model.enums.State;
 import fr.isen.ordersmanagement.interfaces.services.IOrderService;
 import fr.isen.ordersmanagement.services.impl.OrderServiceImpl;
 
@@ -74,5 +75,14 @@ public class OrderResource {
     @PUT
     @Path("/{idOrder}/service")
     public Order updateOrderServiceLevel(Service service, int idOrder){return  orderService.updateServiceLevel(service, idOrder);}
+
+    //STATE
+    @PUT
+    @Path("/{idOrder}/draft")
+    public Order updateOrderStateToDraft(int idOrder){return orderService.updateOrderState( State.Draft, idOrder);}
+
+    @PUT
+    @Path("/{idOrder}/ordered")
+    public Order updateOrderStateToOrder(int idOrder){return  orderService.updateOrderState(State.Ordered, idOrder);}
 
 }

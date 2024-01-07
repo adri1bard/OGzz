@@ -8,6 +8,7 @@ import fr.isen.ordersmanagement.interfaces.model.Location;
 import fr.isen.ordersmanagement.interfaces.model.Order;
 import fr.isen.ordersmanagement.interfaces.model.Project;
 import fr.isen.ordersmanagement.interfaces.model.Service;
+import fr.isen.ordersmanagement.interfaces.model.enums.State;
 
 //begin of modifiable zone(Javadoc).......C/6c89eabd-f62a-4b39-a1ec-9997b36226a6
 
@@ -92,5 +93,10 @@ public interface IOrderService {
 
 //end of modifiable zone(Javadoc).........E/e5c7159d-19fd-48fc-a8b3-a907a703e7e4
     Project getProject(final int idProject);
+
+//begin of modifiable zone(Javadoc).......C/e632b41a-2705-43a3-8a6e-8461ce4ab093
+
+//end of modifiable zone(Javadoc).........E/e632b41a-2705-43a3-8a6e-8461ce4ab093
+    Order updateOrderState(final State state, final int idOrder);
 
 }

@@ -3,10 +3,7 @@ package fr.isen.ordersmanagement.services.impl;
 import fr.isen.ordersmanagement.factories.OrderFactory;
 import fr.isen.ordersmanagement.interfaces.model.License;
 import fr.isen.ordersmanagement.interfaces.model.*;
-import fr.isen.ordersmanagement.interfaces.model.enums.Area;
-import fr.isen.ordersmanagement.interfaces.model.enums.LicenseLevel;
-import fr.isen.ordersmanagement.interfaces.model.enums.ServiceLevel;
-import fr.isen.ordersmanagement.interfaces.model.enums.WeekDay;
+import fr.isen.ordersmanagement.interfaces.model.enums.*;
 import fr.isen.ordersmanagement.interfaces.services.IOrderService;
 import io.agroal.api.AgroalDataSource;
 import jakarta.enterprise.inject.spi.CDI;
@@ -76,6 +73,8 @@ public class OrderServiceImpl implements IOrderService {
                 int idContact = rs.getInt(12);
                 Contact contact = getContact(idContact);
                 order.setContact(contact);
+
+                order.setCurrentState( State.convertIntToEnum(rs.getInt(13) ));
             }
             stmt.close();
             conn.close();
@@ -477,6 +476,27 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         return getOrder(orderId);
+    }
+
+    @Override
+    public Order updateOrderState( State state, int idOrder){
+        Connection conn = null;
+
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+
+            int newState = State.convertEnumToInt(state);
+            String updateQuery="UPDATE `order` SET state=" + newState;
+            stmt.executeUpdate(updateQuery);
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return getOrder(idOrder);
     }
 
     @Override
