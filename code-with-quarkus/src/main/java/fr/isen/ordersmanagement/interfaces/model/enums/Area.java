@@ -38,6 +38,7 @@ public enum Area{
             case Asia:
                 num = 3;
                 break;
+
         }
         return num;
     }

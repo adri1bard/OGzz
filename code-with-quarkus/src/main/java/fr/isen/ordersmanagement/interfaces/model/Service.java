@@ -12,6 +12,14 @@ public class Service {
     public boolean Service4;
     private double bill;
 
+    //service par defaut sera essential;
+    public Service(){
+        this.idService = 17;
+        this.bill = 100;
+        this.carbonFootPrint = 0.3;
+        setService(ServiceLevel.Essential);
+    }
+
     public double getBill() {
         // Automatically generated method. Please do not modify this code.
         return this.bill;

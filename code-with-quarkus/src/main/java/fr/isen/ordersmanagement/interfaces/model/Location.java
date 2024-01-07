@@ -6,9 +6,15 @@ import fr.isen.ordersmanagement.interfaces.model.enums.Area;
 
 //end of modifiable zone(Javadoc).........E/0ff63368-26ab-474e-a370-3d8d9fbb5483
 public class Location {
-//begin of modifiable zone(Javadoc).......C/44cedb14-2ed9-44f5-9db7-5a18d9d0b47a
 
-//end of modifiable zone(Javadoc).........E/44cedb14-2ed9-44f5-9db7-5a18d9d0b47a
+    //location par defaut sera usa
+    public Location(){
+        this.idLocation = 250;
+        this.bill = 0.151;
+        this.carbonFootPrint = 2;
+        this.area = Area.NorthAmerica;
+    }
+
     private double bill;
 
     public double getBill() {
@@ -21,9 +27,7 @@ public class Location {
         this.bill = value;
     }
 
-//begin of modifiable zone(Javadoc).......C/e50dc943-8cd1-4b65-81cc-6c6735cd0839
 
-//end of modifiable zone(Javadoc).........E/e50dc943-8cd1-4b65-81cc-6c6735cd0839
     private double carbonFootPrint;
 
     public double getCarbonFootPrint() {
@@ -36,9 +40,6 @@ public class Location {
         this.carbonFootPrint = value;
     }
 
-//begin of modifiable zone(Javadoc).......C/49ed8aa0-4564-4cb7-aedd-2cbf63bd339e
-
-//end of modifiable zone(Javadoc).........E/49ed8aa0-4564-4cb7-aedd-2cbf63bd339e
     private Area area;
 
     public Area getArea() {
@@ -51,9 +52,7 @@ public class Location {
         this.area = value;
     }
 
-//begin of modifiable zone(Javadoc).......C/cb2540f7-0d00-49b0-87f1-f411ce2eaf39
 
-//end of modifiable zone(Javadoc).........E/cb2540f7-0d00-49b0-87f1-f411ce2eaf39
     private int idLocation;
 
     public int getIdLocation() {

@@ -11,6 +11,7 @@ import fr.isen.ordersmanagement.interfaces.services.IOrderService;
 import io.agroal.api.AgroalDataSource;
 import jakarta.enterprise.inject.spi.CDI;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +35,7 @@ public class OrderServiceImpl implements IOrderService {
                 order = OrderFactory.getInstance().createOrder();
                 order.setIdOrder(rs.getInt(1));
                 order.setName(rs.getString(2));
-                order.setDateCreation(rs.getDate(3));
+                order.setDateCreation(rs.getString(3));
 
                 int idProject = rs.getInt(4);
                 Project project = getProject(idProject);
@@ -85,13 +86,62 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public int createOrder(Order order) {
-        return 0;
+    public int createOrder(int idProject) {
+
+        int id = -1;
+        Connection conn = null;
+
+        Order newOrder = OrderFactory.getInstance().createOrder();
+        newOrder.setProject( getProject(idProject) );
+
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+
+            String insertQuery = "INSERT INTO `order` (name, dateCreation,solutionName, description, price, carbonFootPrint, project, serviceLevel, idLicense, location)" +
+                    "VALUES ('" + newOrder.getName() + "', '" + newOrder.getDateCreation() +"', '" + newOrder.getSolutionName() +"', '" + newOrder.getDescription() +"', " + newOrder.getPrice() +", " + newOrder.getCarbonFootPrint()+", " + idProject + ", " + newOrder.getServiceLevel().getIdService() + ", " + newOrder.getLicense().getIdLicense() +", " + newOrder.getLocation().getIdLocation() +")";
+
+            stmt.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
     }
 
     @Override
-    public Order updateOrder(Order order, int orderId) {
-        return null;
+    public Order updateOrder(Order order ,int orderId) {
+        Connection conn = null;
+        int contact =0;
+        if(order.getContact() != null) contact = order.getContact().getIdContact();
+        try {
+            conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+
+            int area = Area.convertEnumToInt(order.getLocation().getArea());
+            String updateQuery = "UPDATE `order` SET dateCreation='"+ order.getDateCreation() +"', name='" +order.getName() +
+                    "', solutionName='" + order.getSolutionName() + "', description='" + order.getDescription() + "', serviceLevel=" + order.getServiceLevel().getIdService() +
+                    ", price=" + order.getPrice() + ", carbonFootPrint=" + order.getCarbonFootPrint() +", idLicense=" + order.getLicense().getIdLicense() +
+                    ", location=" + order.getLocation().getIdLocation() + ", contact=" + (contact!= 0 ? contact: "null")
+                    + " WHERE idOrder = " + orderId;
+
+            JOptionPane.showMessageDialog(null, updateQuery);
+            stmt.executeUpdate(updateQuery);
+
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return order;
     }
     @Override
     public Contact getContact(int contactId) {
@@ -152,6 +202,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public Contact updateContact(Contact contact, int contactId) {
+        //On peut juste update dans la table Contact car order et contact sont liés par une FK
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -219,14 +270,19 @@ public class OrderServiceImpl implements IOrderService {
         return id;
     }
     @Override
-    public Location updateLocation(Location location, int locationId) {
+    public Location updateLocation(Location location, int orderId) {
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
 
+            Order oldOrder = getOrder(orderId);
+            Double newPricce = oldOrder.getPrice() - oldOrder.getLocation().getBill() + location.getBill();
+            Double newFootPrint = oldOrder.getCarbonFootPrint() - oldOrder.getLocation().getCarbonFootPrint() + location.getCarbonFootPrint();
+
             int area = Area.convertEnumToInt(location.getArea());
-            String updateQuery = "UPDATE location SET " + "bill=" + location.getBill() + ", " + "carbonFootPrint=" + location.getCarbonFootPrint() + ", " + "area=" + area + " " + "WHERE idLocation=" + locationId;
+            //String updateQuery = "UPDATE location SET " + "bill=" + location.getBill() + ", " + "carbonFootPrint=" + location.getCarbonFootPrint() + ", " + "area=" + area + " " + "WHERE idLocation=" + locationId;
+            String updateQuery = "UPDATE 'order' SET location=" + location.getIdLocation()  + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
             stmt.executeUpdate(updateQuery);
 
             stmt.close();
@@ -234,14 +290,14 @@ public class OrderServiceImpl implements IOrderService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+    /*
         List<Location> locations = getLocations();
         for(Location l: locations) {
             if(l.getIdLocation() == locationId) {
                 return l;
             }
         }
-
+    */
         return null;
     }
 
@@ -299,14 +355,19 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public License updateLicense(License license, int licenseId) {
+    public License updateLicense(License license, int orderId) {
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
 
+            Order oldOrder = getOrder(orderId);
+            Double newPricce = oldOrder.getPrice() - oldOrder.getLicense().getBill() + license.getBill();
+            Double newFootPrint = oldOrder.getCarbonFootPrint() - oldOrder.getLicense().getCarbonFootPrint() + license.getCarbonFootPrint();
+
             int licenseLevel = LicenseLevel.convertEnumToInt(license.getLicense());
-            String updateQuery = "UPDATE license SET " + "bill=" + license.getBill() + ", " + "carbonFootPrint=" + license.getCarbonFootPrint() + ", " + "license=" + licenseLevel + " " + "WHERE idLicense=" + licenseId;
+            //String updateQuery = "UPDATE license SET " + "bill=" + license.getBill() + ", " + "carbonFootPrint=" + license.getCarbonFootPrint() + ", " + "license=" + licenseLevel + " " + "WHERE idLicense=" + licenseId;
+            String updateQuery = "UPDATE 'order' SET idLicense =" + license.getIdLicense()  + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;;
             stmt.executeUpdate(updateQuery);
 
 
@@ -316,12 +377,12 @@ public class OrderServiceImpl implements IOrderService {
             throw new RuntimeException(e);
         }
 
-        List<License> licenses = getLicenses();
+/*        List<License> licenses = getLicenses();
         for(License l: licenses) {
             if(l.getIdLicense() == licenseId) {
                 return l;
             }
-        }
+        }*/
         return null;
     }
 
@@ -378,6 +439,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public Availability updateAvailability(Availability availability, int id) {
+        //ON peut juste update dans la table availability car contact et availability sont liés par une FK idem pour contact et Order
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -432,6 +494,8 @@ public class OrderServiceImpl implements IOrderService {
         }
         return levels;
     }
+
+    //inutile
     @Override
     public int createServiceLevel(Service serviceLevel) {
         int id = -1;
@@ -458,14 +522,19 @@ public class OrderServiceImpl implements IOrderService {
         return id;
     }
     @Override
-    public Service updateServiceLevel(Service serviceLevel, int id) {
+    public Service updateServiceLevel(Service serviceLevel, int orderId) {
         Connection conn = null;
+
+        Order oldOrder = getOrder(orderId);
+        Double newPricce = oldOrder.getPrice() - oldOrder.getServiceLevel().getBill() + serviceLevel.getBill();
+        Double newFootPrint = oldOrder.getCarbonFootPrint() - oldOrder.getServiceLevel().getCarbonFootPrint() + serviceLevel.getCarbonFootPrint();
         try {
             conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
 
             int level = ServiceLevel.convertEnumToInt(serviceLevel.getLevel());
-            String updateQuery = "UPDATE services SET " +  "service1= " +serviceLevel.Service1 + ", service2= " + serviceLevel.Service2 + ", service3= " + serviceLevel.Service3 + ", service4= " + serviceLevel.Service4 + ", bill= " + serviceLevel.getBill() + ", carbonFootPrint= " + serviceLevel.getCarbonFootPrint() + ", level= " + level;
+            //String updateQuery = "UPDATE services SET " +  "service1= " +serviceLevel.Service1 + ", service2= " + serviceLevel.Service2 + ", service3= " + serviceLevel.Service3 + ", service4= " + serviceLevel.Service4 + ", bill= " + serviceLevel.getBill() + ", carbonFootPrint= " + serviceLevel.getCarbonFootPrint() + ", level= " + level;
+            String updateQuery="UPDATE 'order SET serviceLevel=" + serviceLevel.getIdService() + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
             stmt.executeUpdate(updateQuery);
 
             stmt.close();
@@ -474,12 +543,12 @@ public class OrderServiceImpl implements IOrderService {
             throw new RuntimeException(e);
         }
 
-        List<Service> services = getLevels();
+/*        List<Service> services = getLevels();
         for(Service l: services) {
             if(l.getIdService() == id) {
                 return l;
             }
-        }
+        }*/
         return null;
     }
 

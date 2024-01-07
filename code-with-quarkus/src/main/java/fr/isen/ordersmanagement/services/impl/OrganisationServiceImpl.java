@@ -9,6 +9,7 @@ import io.agroal.api.AgroalDataSource;
 import jakarta.enterprise.inject.spi.CDI;
 import jakarta.ws.rs.Path;
 
+import javax.swing.*;
 import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;

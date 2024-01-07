@@ -16,7 +16,7 @@ public interface IOrderService {
 //begin of modifiable zone(Javadoc).......C/20c59fdc-6f03-4def-8cb0-9a7ba76127ec
 
 //end of modifiable zone(Javadoc).........E/20c59fdc-6f03-4def-8cb0-9a7ba76127ec
-    int createOrder(final Order order);
+    int createOrder(int idProject);
 
 //begin of modifiable zone(Javadoc).......C/17ea24b7-12f1-487b-bf40-8823b6772863
 
@@ -41,7 +41,7 @@ public interface IOrderService {
 //begin of modifiable zone(Javadoc).......C/5573829b-211a-4305-982e-0127bfd18b12
 
 //end of modifiable zone(Javadoc).........E/5573829b-211a-4305-982e-0127bfd18b12
-    Service updateServiceLevel(final Service serviceLevel, final int id);
+    Service updateServiceLevel(final Service serviceLevel, final int orderId);
 
 //begin of modifiable zone(Javadoc).......C/e4bef2aa-75df-4713-b178-08a284abc6e1
 
@@ -61,7 +61,7 @@ public interface IOrderService {
 //begin of modifiable zone(Javadoc).......C/cccaddca-de49-4031-92e0-045db36cd9c1
 
 //end of modifiable zone(Javadoc).........E/cccaddca-de49-4031-92e0-045db36cd9c1
-    License updateLicense(final License license, final int licenseId);
+    License updateLicense(final License license, final int orderId);
 
 //begin of modifiable zone(Javadoc).......C/73211f04-b567-4aa2-b729-26ee0e9e9e25
 
@@ -71,7 +71,7 @@ public interface IOrderService {
 //begin of modifiable zone(Javadoc).......C/9c67eb00-d93d-409d-8e19-8bd2998f71c7
 
 //end of modifiable zone(Javadoc).........E/9c67eb00-d93d-409d-8e19-8bd2998f71c7
-    Location updateLocation(final Location location, final int locationId);
+    Location updateLocation(final Location location, final int orderId);
 
 //begin of modifiable zone(Javadoc).......C/9c6e1bb6-0cc5-4d4d-b7a5-a261a8b8f77d
 

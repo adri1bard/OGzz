@@ -8,6 +8,19 @@ public class Contact {
 //begin of modifiable zone(Javadoc).......C/da8276f0-d7cb-4971-833b-487405f241be
 
 //end of modifiable zone(Javadoc).........E/da8276f0-d7cb-4971-833b-487405f241be
+    public Contact(){
+        this.firstName = "";
+        this.lastName = "";
+        this.country = "";
+        this.city = "";
+        this.streetName ="";
+        this.postalCode ="";
+        this.phoneNumber = "";
+        this.email ="";
+        this.availabilities = null;
+    }
+
+
     private String firstName;
 
     public String getFirstName() {

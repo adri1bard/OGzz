@@ -14,8 +14,18 @@ public class OrderResource {
     //ORDER
     @GET
     @Path("/{idOrder}")
-    public Order getOrder(int idOrder){
+    public Order readOrder(int idOrder){
         return orderService.getOrder(idOrder);
+    }
+
+    @POST
+    @Path("/{idProject}")
+    public int newOrder(int idProject){return orderService.createOrder(idProject);}
+
+    @PUT
+    @Path("/{idOrder}")
+    public Order updateOrderInfo(Order order, int idOrder){
+        return orderService.updateOrder( order, idOrder);
     }
 
 
@@ -26,7 +36,8 @@ public class OrderResource {
 
     @PUT
     @Path("/{idOrder}/contact/{idContact}")
-    public Contact updateContact(Contact contact, int idContact) {return orderService.updateContact(contact, idContact);}
+    public Contact updateOrderAdressContact(Contact contact, int idContact) {
+        return orderService.updateContact(contact, idContact);}
 
 
     //AVAILABILTY
@@ -40,29 +51,17 @@ public class OrderResource {
 
     //LOCATION
     @POST
-    @Path("/{idOrder}/contact/{idContact}/location")
-    public int createLocation(Location location) {return orderService.createLocation(location);}
-
-    @POST
     @Path("/{idOrder}/contact/{idContact}/location/{idLocation}")
-    public Location updateLocation(Location location, int idLocation) {return orderService.updateLocation(location, idLocation);}
+    public Location updateOrderLocation(Location location, int idLocation) {return orderService.updateLocation(location, idLocation);}
 
     //LICENSE
-    @POST
-    @Path("/{idOrder}/license")
-    public int createLicense(License license){return orderService.createLicense(license);}
-
     @PUT
     @Path("/{idOrder}/license/{idLicense}")
-    public License updateLicense(License license, int idLicense){return orderService.updateLicense(license, idLicense);}
+    public License updateOrderLicense(License license, int idLicense){return orderService.updateLicense(license, idLicense);}
 
     //SERVICELEVEL
-    @POST
-    @Path("/{idOrder}/service")
-    public int createService(Service service){return orderService.createServiceLevel(service);}
-
     @PUT
     @Path("/{idOrder}/service/{idService}")
-    public Service updateService(Service service, int idService){return  orderService.updateServiceLevel(service, idService);}
+    public Service updateOrderServiceLevel(Service service, int idService){return  orderService.updateServiceLevel(service, idService);}
 
 }
