@@ -63,16 +63,16 @@ public class OrderResource {
     //LOCATION
     @POST
     @Path("/{idOrder}/contact/{idContact}/location/{idLocation}")
-    public Location updateOrderLocation(Location location, int idOrder) {return orderService.updateLocation(location, idOrder);}
+    public Order updateOrderLocation(Location location, int idOrder) {return orderService.updateLocation(location, idOrder);}
 
     //LICENSE
     @PUT
-    @Path("/{idOrder}/license/{idLicense}")
-    public License updateOrderLicense(License license, int idOrder){return orderService.updateLicense(license, idOrder);}
+    @Path("/{idOrder}/license")
+    public Order updateOrderLicense(License license, int idOrder){return orderService.updateLicense(license, idOrder);}
 
     //SERVICELEVEL
     @PUT
-    @Path("/{idOrder}/service/{idService}")
-    public Service updateOrderServiceLevel(Service service, int idOrder){return  orderService.updateServiceLevel(service, idOrder);}
+    @Path("/{idOrder}/service")
+    public Order updateOrderServiceLevel(Service service, int idOrder){return  orderService.updateServiceLevel(service, idOrder);}
 
 }

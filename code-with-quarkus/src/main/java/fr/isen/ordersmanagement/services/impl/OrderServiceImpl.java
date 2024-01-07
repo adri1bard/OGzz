@@ -168,7 +168,8 @@ public class OrderServiceImpl implements IOrderService {
             throw new RuntimeException(e);
         }
 
-        contact.setAvailabilities( getRelatedAvailability(contactId).toArray(Availability[]::new));
+
+        if(contact != null )contact.setAvailabilities( getRelatedAvailability(contactId).toArray(Availability[]::new));
         return contact;
     }
 
@@ -246,35 +247,28 @@ public class OrderServiceImpl implements IOrderService {
         return locations;
     }
     @Override
-    public Location updateLocation(Location location, int orderId) {
+    public Order updateLocation(Location location, int orderId) {
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
 
             Order oldOrder = getOrder(orderId);
-            Double newPricce = oldOrder.getPrice() - oldOrder.getLocation().getBill() + location.getBill();
+            Double newPrice = oldOrder.getPrice() - oldOrder.getLocation().getBill() + location.getBill();
             Double newFootPrint = oldOrder.getCarbonFootPrint() - oldOrder.getLocation().getCarbonFootPrint() + location.getCarbonFootPrint();
 
             int area = Area.convertEnumToInt(location.getArea());
-            //String updateQuery = "UPDATE location SET " + "bill=" + location.getBill() + ", " + "carbonFootPrint=" + location.getCarbonFootPrint() + ", " + "area=" + area + " " + "WHERE idLocation=" + locationId;
-            String updateQuery = "UPDATE `order` SET location=" + location.getIdLocation()  + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
+            String updateQuery = "UPDATE `order` SET location=" + location.getIdLocation()  + ", price="+ newPrice + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
             stmt.executeUpdate(updateQuery);
+
 
             stmt.close();
             conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    /*
-        List<Location> locations = getLocations();
-        for(Location l: locations) {
-            if(l.getIdLocation() == locationId) {
-                return l;
-            }
-        }
-    */
-        return null;
+
+        return getOrder(orderId);
     }
 
     @Override
@@ -304,19 +298,18 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public License updateLicense(License license, int orderId) {
+    public Order updateLicense(License license, int orderId) {
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
 
             Order oldOrder = getOrder(orderId);
-            Double newPricce = oldOrder.getPrice() - oldOrder.getLicense().getBill() + license.getBill();
+            Double newPrice = oldOrder.getPrice() - oldOrder.getLicense().getBill() + license.getBill();
             Double newFootPrint = oldOrder.getCarbonFootPrint() - oldOrder.getLicense().getCarbonFootPrint() + license.getCarbonFootPrint();
 
             int licenseLevel = LicenseLevel.convertEnumToInt(license.getLicense());
-            //String updateQuery = "UPDATE license SET " + "bill=" + license.getBill() + ", " + "carbonFootPrint=" + license.getCarbonFootPrint() + ", " + "license=" + licenseLevel + " " + "WHERE idLicense=" + licenseId;
-            String updateQuery = "UPDATE `order` SET idLicense =" + license.getIdLicense()  + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;;
+            String updateQuery = "UPDATE `order` SET idLicense =" + license.getIdLicense()  + ", price="+ newPrice + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;;
             stmt.executeUpdate(updateQuery);
 
 
@@ -326,13 +319,7 @@ public class OrderServiceImpl implements IOrderService {
             throw new RuntimeException(e);
         }
 
-/*        List<License> licenses = getLicenses();
-        for(License l: licenses) {
-            if(l.getIdLicense() == licenseId) {
-                return l;
-            }
-        }*/
-        return null;
+        return getOrder(orderId);
     }
 
     @Override
@@ -469,19 +456,18 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public Service updateServiceLevel(Service serviceLevel, int orderId) {
+    public Order updateServiceLevel(Service serviceLevel, int orderId) {
         Connection conn = null;
 
         Order oldOrder = getOrder(orderId);
-        Double newPricce = oldOrder.getPrice() - oldOrder.getServiceLevel().getBill() + serviceLevel.getBill();
+        Double newPrice = oldOrder.getPrice() - oldOrder.getServiceLevel().getBill() + serviceLevel.getBill();
         Double newFootPrint = oldOrder.getCarbonFootPrint() - oldOrder.getServiceLevel().getCarbonFootPrint() + serviceLevel.getCarbonFootPrint();
         try {
             conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
 
             int level = ServiceLevel.convertEnumToInt(serviceLevel.getLevel());
-            //String updateQuery = "UPDATE services SET " +  "service1= " +serviceLevel.Service1 + ", service2= " + serviceLevel.Service2 + ", service3= " + serviceLevel.Service3 + ", service4= " + serviceLevel.Service4 + ", bill= " + serviceLevel.getBill() + ", carbonFootPrint= " + serviceLevel.getCarbonFootPrint() + ", level= " + level;
-            String updateQuery="UPDATE `order` SET serviceLevel=" + serviceLevel.getIdService() + ", price="+ newPricce + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
+            String updateQuery="UPDATE `order` SET serviceLevel=" + serviceLevel.getIdService() + ", price="+ newPrice + ", carbonFootPrint = "+ newFootPrint + " WHERE idOrder=" + orderId;
             stmt.executeUpdate(updateQuery);
 
             stmt.close();
@@ -490,13 +476,7 @@ public class OrderServiceImpl implements IOrderService {
             throw new RuntimeException(e);
         }
 
-/*        List<Service> services = getLevels();
-        for(Service l: services) {
-            if(l.getIdService() == id) {
-                return l;
-            }
-        }*/
-        return null;
+        return getOrder(orderId);
     }
 
     @Override
